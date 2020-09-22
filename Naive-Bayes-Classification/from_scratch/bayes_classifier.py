@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 #dataset location.
-path = '/home/divyu/PycharmProjects/pythonProject/Resources/electro.csv'
+path = '/home/divyu/PycharmProjects/pythonProject/Resources/playnoplay.csv'
 
 #read dataset.
 ds = pd.read_csv(path)
@@ -46,16 +46,13 @@ for attr in attributes:
     print('~'*40)
 
 def predict(): #Takes necessary input and maps to most probable class.
-    age = input("age?...youth/middle_aged/senior -> ")
-    income = input("income?...low/medium/high -> ")
-    credit_rating = input("credit-rating?...fair/excellent -> ")
-    student = input("student?...yes/no -> ")
+    
 
     #posterior probablity for yes.
-    ppYes = pAttrYes[age] * pAttrYes[income] * pAttrYes[credit_rating] * pAttrYes[student]
+    ppYes = pAttrYes['rainy'] * pAttrYes['mild'] * pAttrYes['high'] * pAttrYes['t']
 
     #posterior probablity for no.
-    ppNo  = pAttrNo[age] * pAttrNo[income] * pAttrNo[credit_rating] * pAttrNo[student]
+    ppNo  = pAttrNo['rainy'] * pAttrNo['mild'] * pAttrNo['high'] * pAttrNo['t']
 
     #probablity yes.
     _pYes = ppYes * pYes
@@ -63,6 +60,10 @@ def predict(): #Takes necessary input and maps to most probable class.
     #probablity no.
     _pNo  = ppNo * pNo
 
+    print(ppYes)
+    print(ppNo)
+    print(_pYes)
+    print(_pNo)
     if _pYes > _pNo:
         print('\nPredicted label-> Yes')
     else:
