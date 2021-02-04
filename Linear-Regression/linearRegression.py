@@ -15,6 +15,8 @@ class linear_reg:
         self.bestFit  = {}
         self.X        = np.array([])
         self.Y        = np.array([])
+        self.X_all    = np.array([])
+        self.Y_all    = np.array([])
         self.X_test   = np.array([])
         self.Y_test   = np.array([])
         self.yPred_all= np.array([])
@@ -26,6 +28,8 @@ class linear_reg:
     
     def split(self): #Splits the dataset for training and testing purpose
         splitAt = len(self.dataset)*7//10
+        self.X_all = np.array(self.dataset[self.Xcoloumn][:])
+        self.Y_all = np.array(self.dataset[self.Ycoloumn][:])
         self.X = np.array(self.dataset[self.Xcoloumn][:splitAt])
         self.Y = np.array(self.dataset[self.Ycoloumn][:splitAt])
         self.X_test = np.array(self.dataset[self.Xcoloumn][splitAt:])
@@ -45,7 +49,7 @@ class linear_reg:
 
     def generate_yPred(self): #Generates predicted-Y using best-fit eq generated via linear regression.
         self.yPred = [(self.bestFit['coefficient']*x+self.bestFit['intercept']) for x in self.X_test]
-        self.yPred_all = [(self.bestFit['coefficient']*x+self.bestFit['intercept']) for x in self.X]
+        self.yPred_all = [(self.bestFit['coefficient']*x+self.bestFit['intercept']) for x in self.X_all]
 
     def calculate_accuracy(self): #Calculates accuracy of prediction of the model.
         self.rmse = math.sqrt(np.square(np.subtract(self.Y_test,self.yPred)).mean())/self.Y_test.mean()*100
@@ -66,8 +70,8 @@ def visualize(packet): #Visualizes the linear model, with regression line, predi
         plt.text(0.05, 0.95, keyContent, transform=ax.transAxes, fontsize=10, bbox=dict(facecolor='w', alpha=0.5), verticalalignment='top')
         ax.set_facecolor('k')
         plt.plot(self.X_test, self.yPred, color='red')
-        plt.plot(self.X, self.yPred_all, color ='red')
-        plt.scatter(self.X, self.Y, c='#32CD32', s=40, marker="*", alpha = 0.6)
+        plt.plot(self.X_all, self.yPred_all, color ='red')
+        plt.scatter(self.X_all, self.Y_all, c='#32CD32', s=100, marker="*", alpha = 0.6)
         
 
         for x,y,_y in zip(self.X_test, self.Y_test, self.yPred):
