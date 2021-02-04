@@ -45,9 +45,7 @@ class linear_reg:
         self.yPred_all = [(self.bestFit['coefficient']*x+self.bestFit['intercept']) for x in self.X]
 
     def calculate_accuracy(self): #Calculates accuracy of prediction of the model.
-        self.rmse = math.sqrt(np.square(np.subtract(self.Y_test,self.yPred)).mean())
-        print(self.Y_test, '\n', self.yPred)
-        print(self.rmse)
+        self.rmse = math.sqrt(np.square(np.subtract(self.Y_test,self.yPred)).mean())/self.Y_test.mean()*100
         self.acc  = (100-self.rmse)
 
     def trainAndTest(self):  #Calls all necessary functions in proper heirarchy for smooth control flow and convenience, hehe:)
