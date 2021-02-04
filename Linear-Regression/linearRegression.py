@@ -31,8 +31,11 @@ class linear_reg:
         self.X_test = np.array(self.dataset[self.Xcoloumn][splitAt:])
         self.Y_test = np.array(self.dataset[self.Ycoloumn][splitAt:])
 
+    def mean(self, arr):
+        return sum(arr)/len(arr)
+
     def apply_linear_regression(self): #Applies linear regression and fetches the best-fit eq parameters in dictionary.
-        x_mean, y_mean = np.mean(self.X), np.mean(self.Y)
+        x_mean, y_mean = self.mean(self.X), self.mean(self.Y)
         x_x, y_y = self.X-x_mean, self.Y-y_mean
         x_ssd = np.array(np.square(x_x))
         yDiff_xDiff = np.array(np.multiply(x_x, y_y))
