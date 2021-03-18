@@ -27,7 +27,7 @@ class linear_reg:
         self.dataset[self.Xcoloumn].fillna(value=self.dataset[self.Xcoloumn].mean(), inplace=True)
     
     def split(self): #Splits the dataset for training and testing purpose
-        splitAt = len(self.dataset)*7//10
+        splitAt = len(self.dataset)
         self.X_all = np.array(self.dataset[self.Xcoloumn][:])
         self.Y_all = np.array(self.dataset[self.Ycoloumn][:])
         self.X = np.array(self.dataset[self.Xcoloumn][:splitAt])
@@ -46,6 +46,7 @@ class linear_reg:
         coefficient = np.sum(yDiff_xDiff) / np.sum(x_ssd)
         intercept   = y_mean - coefficient*x_mean
         self.bestFit = {'coefficient': coefficient, 'intercept': intercept}
+        print(self.bestFit)
 
     def generate_yPred(self): #Generates predicted-Y using best-fit eq generated via linear regression.
         self.yPred = [(self.bestFit['coefficient']*x+self.bestFit['intercept']) for x in self.X_test]
@@ -85,7 +86,7 @@ def visualize(packet): #Visualizes the linear model, with regression line, predi
     plt.show()
 
 def main(): #Main funtion, basically the linear-regression applicable dateset should be called as memeber of class linear-reg for model to initiate.
-    expSalaryModel  = linear_reg('Resources/salary_data.csv', 'YearsExperience', 'Salary',  '\n*  -TrainData\n^ -PredictedData\nRed | -Regression Line\nRest colored |s - noise/error')
+    expSalaryModel  = linear_reg('Resources/aka.csv', 'X', 'Y',  '\n*  -TrainData\n^ -PredictedData\nRed | -Regression Line\nRest colored |s - noise/error')
     expSalaryModel.trainAndTest()
     visualize([expSalaryModel]) #Calls visualizer to plot every insight gained from dataset.
 
